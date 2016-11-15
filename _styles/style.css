@@ -1,0 +1,87 @@
+/***********************************************************************
+Faculdade de Tecnologia de Franca “Doutor Thomaz Novelino”
+PRIMEIRO PROJETO DE TÓPICOS ESPECIAIS EM INFORMÁTICA - 2016/2
+Autor(es):
+ WILLYAN LUINDAYK MACHADO <willyanluindayk@gmail.com> - RA 1090481413036
+ GABRIEL LIBONI <gabriel_liboni@outlook.com> - RA 1090481411016
+****************************************************************************/
+
+/* 
+    Este trecho de código é para configurar de forma geral o corpo do documento HTML
+    Atribuindo zero para as margens (top, right, left, bottom), tamanho da fonte em 12 pontos
+    e tipo de fonte Arial
+*/
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, "Liberation Sans", sans-serif;
+    font-size: 12pt;
+}
+
+/* 
+    Este trecho de código é específico para configuração do cabeçalho da página
+    Apenas foi atribuído uma cor de fundo com especificação em número hexadecimal
+*/
+header {
+    background-color: #F6E24C;
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+}
+
+ul {
+    display: inline-flex;
+    list-style: none;
+}
+
+li:not(:first-child) {
+    padding-left: 30px;
+}
+
+/* 
+    Este trecho especifica como deve ser os títulos no nível h1 do documento HTML
+    O tipo de fonte escolhido foi a Cambria, a cor especificada em hexadecimal e tamanho da 
+    fonte em 200%.
+*/
+h1 {
+    font-family: Cambria, "Times New Roman", Times, serif;
+    color: #A50443;
+    font-size: 200%;
+}
+
+/*
+    Este trecho de código especifica como deve ser o títulos no nível h4 do ddcumento HTML
+    Apenas a cor foi alterada, sendo especificada em hexadecimal
+*/
+h4 {
+    color: #D5427B;
+}
+
+/*
+    Este trecho especifica como os parágrafos devem ser configurados. Foi atribuído aos parágrafos
+    uma margem no início de 50px e tamanho da fonte em 120%;
+*/
+p {
+    text-indent: 50px;
+    font-size: 120%;
+}
+
+/*
+    Este trecho especifica como deve ser formatado as sections do documento HTML.
+    Foi atribuído margens à direita e à esquerda em 10%.
+*/
+section {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+/*
+    Este trecho de código especifica como deve ser formatado o rodapé do documento HTML.
+    Foi atribuído uma cor com valor hexadecimal e uma borda no topo em 3px do tipo sólido
+    e com uma cor em valor hexadecimal
+*/
+footer {
+    background-color: #095479;
+    border-top: 3px solid #A50443;
+}
