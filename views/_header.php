@@ -21,8 +21,14 @@
         
         <nav>
             <ul>
-                <li><a href="?user">Listar usuários</a></li>
-                <li><a href="?news">Listar notícias</a></li>
+                <li><a href="?site">Página Inicial</a></li>
+                <li><a href="?news">Notícias</a></li>
+                <li><a href="?user">Usuários</a></li>
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                    <li> [<?=$_SESSION['username'];?>] <a href="?site/logout"> (sair)</a></li>
+                <?php } else { ?>
+                    <li> <a href="?site/login">Fazer Login</a></li>
+                <?php } ?>
             </ul>
         </nav>
         

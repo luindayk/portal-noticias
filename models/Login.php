@@ -36,7 +36,8 @@ class Login extends BaseModel {
         // Se houver encontrado o usuário
         if($result) {
             // Guarda o id do usuário em uma variável de sessão
-            $_SESSION['user_id'] = $result['user_id']; 
+            $_SESSION['user_id'] = $result['user_id'];
+            $_SESSION['username'] = $result['username'];
         }
 
         return $result;

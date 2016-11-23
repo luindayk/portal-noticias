@@ -33,7 +33,7 @@ class UserController extends BaseController {
                 $this->addMessage('Usuário inserido com sucesso.');                
                 // renderiza para action padrão e termina a execução
                 // da action atual
-                $this->actionIndex();
+                $this->actionIndex();die;
             }
         }
         // renderiza a própria action com o mesmo model
@@ -66,7 +66,7 @@ class UserController extends BaseController {
                 $this->addMessage('Usuário atualizado com sucesso.');
                 // renderiza para action padrão e termina a execução
                 // da action atual
-                $this->actionIndex();                
+                $this->actionIndex();die;                
             }
             // renderiza a própria action com o mesmo model
             $this->render('edit', $user, 'Editando usuário');    
@@ -92,7 +92,7 @@ class UserController extends BaseController {
                     // Adiciona uma mensagem para o usuário
                     $this->addMessage('Usuário excluído com sucesso.');
                     // renderiza para action padrão 
-                    $this->actionIndex();
+                    $this->actionIndex();die;
                 }
             }
             else if($_POST != []) {

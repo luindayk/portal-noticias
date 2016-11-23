@@ -32,7 +32,7 @@ class NewsController extends BaseController {
                 $this->addMessage('Notícia inserida com sucesso.');
                 // renderiza para action padrão e termina a execução
                 // da action atual
-                $this->actionIndex();
+                $this->actionIndex();die;
             }            
         }        
         // renderiza a própria action com o mesmo model
