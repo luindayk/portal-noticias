@@ -28,7 +28,10 @@ Autor(es):
             Este método é responsável por renderizar uma view. Ela recebe como parâmetros o nome
             de uma view e o conteúdo da view. 
         */
-        public function render($view, $model) {
+        public function render($view, $model, $title = null) {
+
+            require_once('views/_header.php');
+
             $viewFilename = "views/{$this->getControllerName()}/$view.php";
             
             if(is_file($viewFilename)) {
@@ -37,6 +40,8 @@ Autor(es):
             else {
                 throw new Exception("Arquivo de visualização '$viewFilename' não encontrado.");
             }
+
+            require_once('views/_footer.php');
         }
 
         abstract function requireLogin($action);

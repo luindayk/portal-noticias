@@ -32,7 +32,7 @@ class NewsController extends BaseController {
                 $this->addMessage('Notícia inserida com sucesso.');
                 // renderiza para action padrão e termina a execução
                 // da action atual
-                $this->actionIndex();die;
+                $this->actionIndex();
             }            
         }        
         // renderiza a própria action com o mesmo model
@@ -44,7 +44,7 @@ class NewsController extends BaseController {
 
         // Será necessária a autenticação quando não houver sessão ativa
         // e a action especificada estiver no vetor de actions protegidos
-        return !$hasSession && in_array($action, ['actionNew', 'actionEdit', 'actionDelete', 'actionIndex']);
+        return !$hasSession && in_array($action, ['new', 'edit', 'delete', 'index']);
     }
 
     // Método responsável por atualizar uma notícia. Precisa de um id como parâmetro
@@ -116,7 +116,7 @@ class NewsController extends BaseController {
 
         $newsList = $news->find(); // faz uma busca no BD de todos os registros
 
-        $this->render('index', $newsList); // Renderiza uma view com os dados da busca
+        $this->render('index', $newsList, 'Lista de usuários'); // Renderiza uma view com os dados da busca
     }
 }
 

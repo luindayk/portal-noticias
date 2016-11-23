@@ -19,7 +19,7 @@ Autor(es):
         public function actionIndex() {
             $news = new News($this); // cria um novo objeto do modelo
             $newsList = $news->find(null, 'creation_time desc', 10); // faz uma busca no BD
-            $this->render('index', $newsList); // Renderiza uma view com os dados da busca
+            $this->render('index', $newsList, 'Página inicial'); // Renderiza uma view com os dados da busca
         }
         
         public function actionTeste() {
@@ -44,13 +44,34 @@ Autor(es):
 
                 // Invoca a validação de dados
                 if($login->validateData()) {
-                    $this->addMessage('Autenticação efetuada com sucesso.');
-                    $login = new Login($this);
+                    
+                    // Se houver rota salva na sessão, redirecionamos para ela
+                    if(isset($_SESSION['route_controller']) && 
+                        isset($_SESSION['route_action'])) {
+
+                        if(isset($_SESSION['route_id'])) {
+                            header("Location: ?{$_SESSION['route_controller']}/{$_SESSION['route_action']}/{$_SESSION['route_id']}");
+                        }
+                        else {
+                            header("Location: ?{$_SESSION['route_controller']}/{$_SESSION['route_action']}");                            
+                        } 
+
+                    }
+                    // Sem rota salva, vamos para a página inicial
+                    else {
+                        header('Location: ?site/index');
+                    }
                 }
                 // Redirecionar para a rota desejada                
             }
 
-            $this->render('login', $login);
+            $this->render('login', $login, 'Acesso ao sistema');
+        }
+
+        public function actionLogout() {
+            session_destroy();
+            $_SESSION = [];
+            header('Location: ?site/login');
         }
         
     }

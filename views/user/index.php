@@ -5,46 +5,36 @@ Autor(es):
  WILLYAN LUINDAYK MACHADO <willyanluindayk@gmail.com> - RA 1090481413036
  GABRIEL LIBONI <gabriel_liboni@outlook.com> - RA 1090481411016
 ****************************************************************************/-->
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<meta lang="pt-BR" />
-	<title>Listagem de usuários</title>
-</head>
-<body>
-	<h1>Listagem de usuários</h1>
-	<p><a href="?site">Voltar ao início</a></p>
-	<p><a href="?user/new">Criar novo usuário</a></p>
-	<?php if($this->hasMessages()) : ?>
-            <div style="color:darkgreen">
-                <?php
-                    $messages = $this->getMessages(true);
-                    // Exibe a primeira mensagem disponível
-                    echo $messages[0];
-                ?>
-            </div>
-    <?php endif; ?>
-	<table>
+<h1>Listagem de usuários</h1>
+<p><a href="?site">Voltar ao início</a></p>
+<p><a href="?user/new">Criar novo usuário</a></p>
+<?php if($this->hasMessages()) : ?>
+        <div style="color:darkgreen">
+            <?php
+                $messages = $this->getMessages(true);
+                // Exibe a primeira mensagem disponível
+                echo $messages[0];
+            ?>
+        </div>
+<?php endif; ?>
+<table>
+	<tr>
+		<th>Código</th>
+		<th>Primeiro Nome</th>
+		<th>Sobrenome</th>
+		<th>Nome de usuário</th>
+		<th>EDITAR</th>
+		<th>EXCLUIR</th>
+	</tr>
+	
+	<?php foreach($model as $user) : ?>
 		<tr>
-			<th>Código</th>
-			<th>Primeiro Nome</th>
-			<th>Sobrenome</th>
-			<th>Nome de usuário</th>
-			<th>EDITAR</th>
-			<th>EXCLUIR</th>
+			<td><?=$user->getAttrValue('user_id')?></td>
+			<td><?=$user->getAttrValue('firstname')?></td>
+			<td><?=$user->getAttrValue('lastname')?></td>
+			<td><?=$user->getAttrValue('username')?></td>
+			<td><a href="?user/edit/<?=$user->getAttrValue('user_id');?>">Editar</a></td>
+			<td><a href="?user/delete/<?=$user->getAttrValue('user_id');?>">Excluir</a></td>
 		</tr>
-		
-		<?php foreach($model as $user) : ?>
-			<tr>
-				<td><?=$user->getAttrValue('user_id')?></td>
-				<td><?=$user->getAttrValue('firstname')?></td>
-				<td><?=$user->getAttrValue('lastname')?></td>
-				<td><?=$user->getAttrValue('username')?></td>
-				<td><a href="?user/edit/<?=$user->getAttrValue('user_id');?>">Editar</a></td>
-				<td><a href="?user/delete/<?=$user->getAttrValue('user_id');?>">Excluir</a></td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
-</body>
-</html>
+	<?php endforeach; ?>
+</table>

@@ -5,18 +5,9 @@ Autor(es):
  WILLYAN LUINDAYK MACHADO <willyanluindayk@gmail.com> - RA 1090481413036
  GABRIEL LIBONI <gabriel_liboni@outlook.com> - RA 1090481411016
 ****************************************************************************/-->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta lang="pt-BR" />
-        <title>Novo usuário</title>
-    </head>
-    <body>
-        
-        <h1>Novo usuário</h1>
-        
-        <?php
-            $action = '?user/new';
-            include('views/user/_form.php');
-        ?>
+<h1>Novo usuário</h1>
+
+<?php
+    $action = '?user/new';
+    include('views/user/_form.php');
+?>

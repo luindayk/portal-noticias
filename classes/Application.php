@@ -72,11 +72,13 @@ class Application {
 
     private function processLogin($controller, $action, $id) {
 
+        session_start();
+
         // Guarda as informações da rota qeu o usuário originalmente
         // queria acessar
-        $_SESSION['controller'] = $controller;
-        $_SESSION['action'] = $action;
-        $_SESSION['route_id'] = $id;
+        $_SESSION['route_controller'] = $controller;
+        $_SESSION['route_action'] = $action;
+        $_SESSION['route_route_id'] = $id;
 
         header('Location: ?site/login');
     }
@@ -90,7 +92,13 @@ class Application {
         /* 
             Esta variável é declarada como um array e recebe como valor os caracteres
             digitados na URL
-        */
+        */             
+        $controllerName = '';
+        $actionName = '';
+
+        $controllerObj = null;
+        $actionMethod = null;
+        
         $queryString = $_SERVER['QUERY_STRING'];
         $id = null;
 
@@ -108,9 +116,9 @@ class Application {
         if($queryString == '') {
             // define o controller padrão da aplicação e usa a função 'ucfirst' para
             // alterar a primeira letra em maiúsculo (site -> Site)
-            $controller = ucfirst($this->getParam('default_controller'));
+            $controllerName = strtolower($this->getParam('default_controller'));
             // define a action padrão da aplicação (index)
-            $action = 'action' . ucfirst($this->getParam('default_action'));
+            $actionName = strtolower($this->getParam('default_action'));
         }
         else 
         { // Caso a URL esteja preenchida...
@@ -120,24 +128,24 @@ class Application {
             switch(count($parts)) :
                 case 1: // Apenas o controller
                     // primeira parte do conteúdo digitado na URL para definir o controller
-                    $controller = ucfirst($parts[0]);
+                    $controllerName = strtolower($parts[0]);
                     // como não foi digitado a segunda parte pra uma action, é atribuída
                     // a action padrão (index)
-                    $action = 'action' . ucfirst($this->getParam('default_action'));
+                    $actionName = strtolower($this->getParam('default_action'));
                     break;
                 
                 case 2: // Controller/action
                     // primeira parte do conteúdo digitado na URL para definir o controller
-                    $controller = ucfirst($parts[0]);
+                    $controllerName = strtolower($parts[0]);
                     // segunda parte do conteúdo e define a action
-                    $action = 'action' . ucfirst($parts[1]);
+                    $actionName = strtolower($parts[1]);
                     break;
                 
                 case 3: // Controller/action/id
                     // primeira parte do conteúdo digitado na URL para definir o controller
-                    $controller = ucfirst($parts[0]);
+                    $controllerName = strtolower($parts[0]);
                     // segunda parte do conteúdo e define a action
-                    $action = 'action' . ucfirst($parts[1]);
+                    $actionName = strtolower($parts[1]);
                     // terceira parte do conteúdo e define o id
                     $id = $parts[2];
                     
@@ -151,50 +159,48 @@ class Application {
         
         // Carrega o arquivo da classe do controller que deve estar no diretório 
         // controllers.
-        $classFilename = "controllers/{$controller}Controller.php";
-        
+        $controllerClassName = ucfirst($controllerName) . 'Controller';
+
+        $controllerFileName = "controllers/{$controllerClassName}.php";
         // Verifica se o diretório e arquivo são válidos, caso não, retorna Não Encontrado
-        if(is_file($classFilename)) {
-            require_once("controllers/{$controller}Controller.php");
+        if(is_file($controllerFileName)) {
+            require_once($controllerFileName);
         }
         else {
             // Arquivo do controller não encontrado
             header('HTTP/1.0 404 Not Found');
             exit(1);
         }
-        
-        // Cria o controller
-        $controllerClassName = $controller . 'Controller';
-        
+
         // Classe do controller não encontrada no arquivo
         if(!class_exists($controllerClassName)) {
             header('HTTP/1.0 404 Not Found');
             exit(1);
         }
-        
-        // Cria um novo objeto do controller e passa como parâmetro a 
-        // própria classe.
-        $c = new $controllerClassName($this);
+
+        $controllerObj = new $controllerClassName($this);
+
+        $actionMethod = 'action' . ucfirst($actionName);
         
         // Método da action não encontrado no controller
-        if(!method_exists($c, $action)) {
+        if(!method_exists($controllerObj, $actionMethod)) {
             header('HTTP/1.0 404 Not Found');
             exit(1);
         }
         
-        // Se o login NÂO foi necessário, pode chamar a action
-        if($c->requireLogin($action)){
-            $this->processLogin($controller, $action, $id);    
+        // Se o login for necessário, faz o desvio
+        if($controllerObj->requireLogin($actionName)) {
+            $this->processLogin($controllerName, $actionName, $id);
         }
-
+        
         // Caso a rota tenha três partes, é necessário chamar
         // a action passando id como parâmetro
         if(count($parts) == 3) {
-            $c->$action($id);
+            $controllerObj->$actionMethod($id);
         }
         else {
             // Invoca a action dentro do controller
-            $c->$action();
+            $controllerObj->$actionMethod();
         }
     
     }

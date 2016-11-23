@@ -5,19 +5,10 @@ Autor(es):
  WILLYAN LUINDAYK MACHADO <willyanluindayk@gmail.com> - RA 1090481413036
  GABRIEL LIBONI <gabriel_liboni@outlook.com> - RA 1090481411016
 ****************************************************************************/-->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta lang="pt-BR" />
-        <title>Novo usuário</title>
-    </head>
-    <body>
-        
-        <h1>Editando usuário #<?= $model->getAttrValue('user_id'); ?></h1>
-        
-        
-        <?php
-            $action = '?user/edit/' . $model->getAttrValue('user_id');
-            include('views/user/_form.php');
-        ?>
+<h1>Editando usuário #<?= $model->getAttrValue('user_id'); ?></h1>
+
+
+<?php
+    $action = '?user/edit/' . $model->getAttrValue('user_id');
+    include('views/user/_form.php');
+?>

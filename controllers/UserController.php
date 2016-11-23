@@ -33,11 +33,11 @@ class UserController extends BaseController {
                 $this->addMessage('Usuário inserido com sucesso.');                
                 // renderiza para action padrão e termina a execução
                 // da action atual
-                $this->actionIndex();die;
+                $this->actionIndex();
             }
         }
         // renderiza a própria action com o mesmo model
-        $this->render('new', $user);
+        $this->render('new', $user, 'Inserindo usuário');
     }
 
     public function requireLogin($action){
@@ -46,7 +46,7 @@ class UserController extends BaseController {
 
         // Será necessária a autenticação quando não houver sessão ativa
         // e a action especificada estiver no vetor de actions protegidos
-        return !$hasSession && in_array($action, ['actionNew', 'actionEdit', 'actionDelete', 'actionIndex']);
+        return !$hasSession && in_array($action, ['new', 'edit', 'delete', 'index']);
     }
     
     // Método responsável por atualizar uma notícia. Precisa de um id como parâmetro
@@ -66,10 +66,10 @@ class UserController extends BaseController {
                 $this->addMessage('Usuário atualizado com sucesso.');
                 // renderiza para action padrão e termina a execução
                 // da action atual
-                $this->actionIndex();die;                
+                $this->actionIndex();                
             }
             // renderiza a própria action com o mesmo model
-            $this->render('edit', $user);    
+            $this->render('edit', $user, 'Editando usuário');    
             
         }
         else {
@@ -102,7 +102,7 @@ class UserController extends BaseController {
             }
             else{
                 // renderiza a própria action com o mesmo model            
-                $this->render('delete', $user);
+                $this->render('delete', $user, 'Excluindo usuário');
             }    
         }
         else {
@@ -119,7 +119,7 @@ class UserController extends BaseController {
 
         $userList = $user->find(); // faz uma busca no BD de todos os registros
 
-        $this->render('index', $userList); // Renderiza uma view com os dados da busca
+        $this->render('index', $userList, 'Lista de notícias'); // Renderiza uma view com os dados da busca
     }
 }
 ?>
